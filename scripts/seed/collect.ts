@@ -41,7 +41,7 @@ async function main() {
     process.exit(1);
   }
 
-  const client = new PoliteClient({ userAgent: `BakuCentersDirectory-seed/0.1 (+mailto:${contact})` });
+  const client = new PoliteClient({ userAgent: `KursTap.az-seed/0.1 (+https://kurstap.az; mailto:${contact})` });
   const log = (msg: string) => console.log(msg);
   const records: CenterRecord[] = [];
   const skipped: Skipped[] = [];

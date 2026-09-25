@@ -1,4 +1,4 @@
-# Bakı Bağça və Kurs Bələdçisi
+# KursTap.az
 
 A directory of kindergartens (bağçalar) and training centers (tədris mərkəzləri) in Baku.
 Stack: Next.js + Tailwind, Supabase (Postgres + PostGIS, Auth, Storage), Leaflet + OpenStreetMap.

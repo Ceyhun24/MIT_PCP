@@ -21,7 +21,7 @@ test("CSV round-trips quotes, commas, newlines and Azerbaijani letters", () => {
 test("robots.txt: longest rule wins, wildcards, agent groups", () => {
   const r = parseRobots(
     "User-agent: *\nDisallow: /private\nAllow: /private/ok\nDisallow: /*.pdf$\nCrawl-delay: 5\n\nUser-agent: OtherBot\nDisallow: /",
-    "BakuCentersDirectory-seed/0.1",
+    "KursTap.az-seed/0.1",
   );
   assert.equal(r.isAllowed("/"), true);
   assert.equal(r.isAllowed("/private/x"), false);
