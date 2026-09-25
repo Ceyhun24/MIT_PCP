@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "Bakı Bağça və Kurs Bələdçisi",
+    "tagline": "Bakıda bağça və tədris mərkəzlərini asanlıqla tapın",
+    "comingSoon": "Sayt hazırlanır. Tezliklə burada axtarış və xəritə olacaq."
+  },
+  "sections": {
+    "kindergarten": "Bağçalar",
+    "training_center": "Tədris mərkəzləri"
+  },
+  "verification": {
+    "unverified": "Təsdiqlənməyib",
+    "verified": "Təsdiqlənib"
+  },
+  "amenities": {
+    "playground": "Oyun meydançası",
+    "security_cameras": "Təhlükəsizlik kameraları",
+    "meals": "Qidalanma",
+    "transport": "Nəqliyyat xidməti",
+    "medical_staff": "Tibb işçisi",
+    "sports_hall": "İdman zalı",
+    "swimming_pool": "Hovuz",
+    "garden": "Bağ / yaşıl sahə",
+    "parking": "Avtomobil dayanacağı"
+  },
+  "languages": {
+    "az": "Azərbaycan dili",
+    "ru": "Rus dili",
+    "en": "İngilis dili",
+    "tr": "Türk dili",
+    "de": "Alman dili",
+    "fr": "Fransız dili",
+    "ar": "Ərəb dili",
+    "fa": "Fars dili",
+    "zh": "Çin dili",
+    "ko": "Koreya dili",
+    "ja": "Yapon dili",
+    "es": "İspan dili",
+    "it": "İtalyan dili"
+  },
+  "pricePeriod": {
+    "month": "ayda",
+    "lesson": "dərs",
+    "total": "tam kurs"
+  },
+  "currency": {
+    "symbol": "₼"
+  },
+  "footer": {
+    "osmAttribution": "Xəritə və bəzi məlumatlar: © OpenStreetMap iştirakçıları (ODbL)"
+  }
+}
