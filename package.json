@@ -13,7 +13,8 @@
     "db:test": "bash scripts/db/test-local.sh",
     "seed:collect": "node --env-file-if-exists=.env.local scripts/seed/collect.ts",
     "seed:check": "node scripts/seed/check.ts",
-    "seed:import": "node --env-file-if-exists=.env.local scripts/seed/import.ts"
+    "seed:import": "node --env-file-if-exists=.env.local scripts/seed/import.ts",
+    "db:dev": "bash scripts/dev/local-stack.sh"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

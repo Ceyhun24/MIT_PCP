@@ -1,12 +1,100 @@
 {
   "app": {
     "name": "KursTap.az",
-    "tagline": "Bakıda bağça və tədris mərkəzlərini asanlıqla tapın",
-    "comingSoon": "Sayt hazırlanır. Tezliklə burada axtarış və xəritə olacaq."
+    "tagline": "Bakıda bağça və tədris mərkəzlərini asanlıqla tapın"
+  },
+  "nav": {
+    "home": "Ana səhifə",
+    "back": "Axtarışa qayıt"
   },
   "sections": {
     "kindergarten": "Bağçalar",
-    "training_center": "Tədris mərkəzləri"
+    "training_center": "Tədris mərkəzləri",
+    "label": "Bölmə"
+  },
+  "type": {
+    "kindergarten": "Bağça",
+    "training_center": "Tədris mərkəzi"
+  },
+  "search": {
+    "placeholder": "Ad, kurs və ya fənn axtarın…",
+    "submit": "Axtar",
+    "filters": "Filtrlər",
+    "apply": "Tətbiq et",
+    "reset": "Sıfırla",
+    "district": "Rayon",
+    "anyDistrict": "Bütün rayonlar",
+    "price": "Aylıq qiymət (₼)",
+    "priceMin": "Ən az",
+    "priceMax": "Ən çox",
+    "age": "Uşağın / tələbənin yaşı",
+    "agePlaceholder": "məs. 5",
+    "language": "Tədris dili",
+    "anyLanguage": "İstənilən dil",
+    "amenities": "Şərait",
+    "nearMe": "Yaxınlığımda",
+    "nearMeOn": "Yaxınlığımda axtarılır",
+    "nearMeOff": "Söndür",
+    "locating": "Yeriniz müəyyən edilir…",
+    "radius": "Radius",
+    "geoDenied": "Yerinizi müəyyən etmək mümkün olmadı. Brauzerdə yer icazəsini yoxlayın.",
+    "geoUnsupported": "Brauzeriniz yer təyinini dəstəkləmir."
+  },
+  "results": {
+    "count": "{count} nəticə",
+    "none": "Heç nə tapılmadı. Filtrləri dəyişib yenidən cəhd edin.",
+    "list": "Siyahı",
+    "map": "Xəritə",
+    "sortedByDistance": "Məsafəyə görə sıralanıb",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "page": "Səhifə {page} / {pages}",
+    "details": "Ətraflı"
+  },
+  "center": {
+    "district": "Rayon",
+    "address": "Ünvan",
+    "phone": "Telefon",
+    "email": "E-poçt",
+    "website": "Vebsayt",
+    "social": "Sosial şəbəkələr",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "hours": "İş saatları",
+    "ages": "Yaş həddi",
+    "price": "Qiymət",
+    "perMonth": "ayda",
+    "languages": "Tədris dili",
+    "groupSize": "Qrupda uşaq sayı",
+    "groupSizeValue": "ən çox {count}",
+    "amenities": "Mühit və infrastruktur",
+    "courses": "Kurslar",
+    "photos": "Şəkillər",
+    "location": "Xəritədə yeri",
+    "openMap": "OpenStreetMap-də aç",
+    "notProvided": "Məlumat yoxdur",
+    "rating": "Reytinq",
+    "ratingValue": "{avg} ({count} rəy)",
+    "noRatings": "Hələ rəy yoxdur",
+    "source": "Məlumat mənbəyi",
+    "collectedAt": "toplanma tarixi: {date}",
+    "unverifiedNote": "Bu məlumatlar açıq mənbələrdən toplanıb və hələ mərkəz tərəfindən təsdiqlənməyib. Zəng edib dəqiqləşdirməyiniz tövsiyə olunur."
+  },
+  "course": {
+    "name": "Kurs",
+    "subject": "Fənn",
+    "level": "Yaş / səviyyə",
+    "duration": "Müddət",
+    "price": "Qiymət"
+  },
+  "units": {
+    "years": "{value} yaş",
+    "yearsRange": "{min}–{max} yaş",
+    "yearsFrom": "{min} yaşdan",
+    "yearsTo": "{max} yaşadək",
+    "km": "{value} km",
+    "m": "{value} m",
+    "away": "{distance} məsafədə"
   },
   "verification": {
     "unverified": "Təsdiqlənməyib",
@@ -46,7 +134,17 @@
   "currency": {
     "symbol": "₼"
   },
+  "errors": {
+    "notConfigured": "Verilənlər bazası hələ qoşulmayıb. Administrator .env.local faylını doldurmalıdır.",
+    "loadFailed": "Məlumatları yükləmək mümkün olmadı. Bir az sonra yenidən cəhd edin.",
+    "notFound": "Səhifə tapılmadı",
+    "notFoundText": "Axtardığınız mərkəz mövcud deyil və ya gizlədilib."
+  },
   "footer": {
     "osmAttribution": "Xəritə və bəzi məlumatlar: © OpenStreetMap iştirakçıları (ODbL)"
+  },
+  "map": {
+    "zoomIn": "Yaxınlaşdır",
+    "zoomOut": "Uzaqlaşdır"
   }
 }

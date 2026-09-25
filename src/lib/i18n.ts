@@ -13,12 +13,15 @@ type Paths<T, P extends string = ""> = {
 }[keyof T & string];
 export type MessageKey = Paths<Dict>;
 
-export function t(key: MessageKey, locale: Locale = defaultLocale): string {
+/** Looks up a message; "{name}" placeholders are replaced from `vars`. */
+export function t(key: MessageKey, vars?: Record<string, string | number>, locale: Locale = defaultLocale): string {
   const value = key.split(".").reduce<unknown>((node, part) => (node as Record<string, unknown>)?.[part], dictionaries[locale]);
-  return typeof value === "string" ? value : key;
+  if (typeof value !== "string") return key;
+  return vars ? value.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? String(vars[name]) : m)) : value;
 }
 
-/** Formats an AZN amount, e.g. 350 → "350 ₼". */
-export function formatAzn(amount: number): string {
-  return `${new Intl.NumberFormat("az-Latn-AZ", { maximumFractionDigits: 2 }).format(amount)} ${t("currency.symbol")}`;
+/** Looks up a message whose last key segment is dynamic (e.g. an amenity slug). */
+export function tDynamic(prefix: "amenities" | "languages" | "pricePeriod" | "sections" | "type" | "verification", key: string): string {
+  const group = dictionaries[defaultLocale][prefix] as Record<string, string>;
+  return group[key] ?? key;
 }
