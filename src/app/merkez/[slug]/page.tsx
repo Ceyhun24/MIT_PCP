@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SiteFooter, SiteHeader } from "@/components/SiteHeader";
 import { RatingBadge, TypeBadge, VerificationBadge } from "@/components/Badges";
 import { PinMapLazy } from "@/components/PinMapLazy";
+import { Reviews } from "@/components/Reviews";
 import { getCenter } from "@/lib/data";
 import { formatAgeRange, formatAzn, formatDate, formatPriceRange } from "@/lib/format";
 import { t, tDynamic } from "@/lib/i18n";
@@ -211,6 +212,8 @@ function CenterDetails({ center }: { center: CenterDetail }) {
           )}
         </section>
       )}
+
+      <Reviews centerId={center.id} slug={center.slug} ratingAvg={center.rating_avg} ratingCount={center.rating_count} />
 
       {center.source_url && (
         <p className="text-xs text-slate-500">

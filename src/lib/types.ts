@@ -66,3 +66,19 @@ export type CenterDetail = {
 };
 
 export type Option = { slug: string; name: string };
+
+export type PublicReview = {
+  id: string;
+  rating: number;
+  body: string;
+  created_at: string;
+  author: { display_name: string | null } | null;
+  review_replies: { body: string; created_at: string }[] | { body: string; created_at: string } | null;
+};
+
+export type OwnReview = {
+  id: string;
+  rating: number;
+  body: string;
+  status: "pending" | "approved" | "rejected";
+};

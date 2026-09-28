@@ -14,7 +14,9 @@
     "seed:collect": "node --env-file-if-exists=.env.local scripts/seed/collect.ts",
     "seed:check": "node scripts/seed/check.ts",
     "seed:import": "node --env-file-if-exists=.env.local scripts/seed/import.ts",
-    "db:dev": "bash scripts/dev/local-stack.sh"
+    "db:dev": "bash scripts/dev/local-stack.sh",
+    "make-admin": "node --env-file-if-exists=.env.local scripts/admin/make-admin.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -26,6 +28,7 @@
     "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/leaflet": "^1.9.22",
     "@types/node": "^22.20.4",

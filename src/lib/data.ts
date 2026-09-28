@@ -2,7 +2,7 @@
 import { getPublicClient } from "@/lib/supabase/public";
 import { filtersToRpcArgs, type Filters } from "@/lib/search";
 import { parseEwkbPoint } from "@/lib/geo";
-import type { CenterDetail, Option, SearchResult } from "@/lib/types";
+import type { CenterDetail, Option, PublicReview, SearchResult } from "@/lib/types";
 
 export type Loaded<T> = { ok: true; data: T } | { ok: false; error: "notConfigured" | "loadFailed" };
 
@@ -59,4 +59,18 @@ export async function getCenter(slug: string): Promise<Loaded<CenterDetail | nul
   center.courses.sort((a, b) => a.name.localeCompare(b.name, "az"));
   center.photos.sort((a, b) => a.sort_order - b.sort_order);
   return { ok: true, data: center };
+}
+
+export async function getApprovedReviews(centerId: string): Promise<PublicReview[]> {
+  const db = getPublicClient();
+  if (!db) return [];
+  const { data, error } = await db
+    .from("reviews")
+    .select("id, rating, body, created_at, author:profiles!reviews_user_id_fkey(display_name), review_replies(body, created_at)")
+    .eq("center_id", centerId)
+    .eq("status", "approved")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) console.error("getApprovedReviews failed", error);
+  return (data ?? []) as unknown as PublicReview[];
 }

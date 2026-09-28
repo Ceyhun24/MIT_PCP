@@ -306,5 +306,36 @@ begin
   raise notice 'PASS: language + amenity filters';
 end $$;
 
+-- ---------------------------------------------------------------------------
+-- Public display names (no e-mail leaks)
+-- ---------------------------------------------------------------------------
+reset role;
+do $$ begin
+  if exists (select 1 from public.profiles where display_name is not null) then
+    raise exception 'FAIL: new profiles got a display name from the e-mail';
+  end if;
+  raise notice 'PASS: new profiles start without a public name (e-mail not exposed)';
+end $$;
+
+set role authenticated;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000c1';
+do $$
+declare n int;
+begin
+  update public.profiles set display_name = 'Aysel' where id = auth.uid();
+  update public.profiles set display_name = 'HACK' where id = '00000000-0000-0000-0000-0000000000b1';
+  get diagnostics n = row_count;
+  if n <> 0 then raise exception 'FAIL: user renamed someone else'; end if;
+  if (select display_name from public.profiles where id = auth.uid()) <> 'Aysel' then
+    raise exception 'FAIL: user could not set own name';
+  end if;
+  begin
+    update public.profiles set display_name = 'x' where id = auth.uid();
+    raise exception 'FAIL: 1-letter name accepted';
+  exception when check_violation then null;
+  end;
+  raise notice 'PASS: users set only their own public name (2–60 letters)';
+end $$;
+
 reset role;
 \echo ALL RLS/SEARCH TESTS PASSED
