@@ -16,7 +16,8 @@
     "seed:import": "node --env-file-if-exists=.env.local scripts/seed/import.ts",
     "db:dev": "bash scripts/dev/local-stack.sh",
     "make-admin": "node --env-file-if-exists=.env.local scripts/admin/make-admin.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:supabase": "node --env-file-if-exists=.env.local scripts/admin/check-supabase.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

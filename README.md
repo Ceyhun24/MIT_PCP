@@ -54,8 +54,11 @@ Supabase stores the data, sends sign-in e-mails and keeps photos.
 6. **E-mail sending (before real users).** Supabase's built-in e-mail only allows a few e-mails per hour —
    fine for testing, not for launch. Under **Authentication → Emails → SMTP settings** connect an
    e-mail service (for example Resend or Brevo; both have free tiers). *Ask me before adding one if you want help.*
-7. **Copy the keys.** **Project Settings → API**: you need the *Project URL*, the *anon / public* key and
-   the *service_role* key (secret!).
+7. **Copy the keys.** **Project Settings → API / API Keys**: you need the *Project URL*
+   (`https://<your-code>.supabase.co`), the *publishable* (or *anon*) key and the *secret* (or
+   *service_role*) key. Keep the secret key only in `.env.local` — never send it in a chat or e-mail.
+8. **Check the setup** (after Part 3, step 3): run `npm run check:supabase`. Every line should show ✓;
+   each ✗ says what to fix.
 
 ---
 
