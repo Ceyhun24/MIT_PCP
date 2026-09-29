@@ -21,7 +21,9 @@ export function t(key: MessageKey, vars?: Record<string, string | number>, local
 }
 
 /** Looks up a message whose last key segment is dynamic (e.g. an amenity slug). */
-export function tDynamic(prefix: "amenities" | "languages" | "pricePeriod" | "sections" | "type" | "verification", key: string): string {
+type FlatGroup = { [K in keyof Dict]: Dict[K] extends Record<string, string> ? K : never }[keyof Dict];
+export function tDynamic(prefix: FlatGroup, key: string, vars?: Record<string, string | number>): string {
   const group = dictionaries[defaultLocale][prefix] as Record<string, string>;
-  return group[key] ?? key;
+  const value = group[key] ?? key;
+  return vars ? value.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? String(vars[name]) : m)) : value;
 }

@@ -18,7 +18,7 @@ test("home, section toggle, text search, filters", async ({ page }) => {
   await page.locator("#q").fill("riyaziyyat");
   await page.getByRole("button", { name: "Axtar", exact: true }).click();
   await page.waitForURL(/q=riyaziyyat/);
-  await expect(page.locator("article")).toHaveCount(1);
+  await expect(page.locator("article h3", { hasText: "TEST Kurs Mərkəzi 1" })).toBeVisible();
   expect(await cardNames(page)).toEqual(["TEST Kurs Mərkəzi 1"]);
 
   // Price ≤ 400 ₼ + playground.
@@ -28,11 +28,11 @@ test("home, section toggle, text search, filters", async ({ page }) => {
   await page.getByLabel("Oyun meydançası").check();
   await page.getByRole("button", { name: "Tətbiq et" }).click();
   await page.waitForURL(/pmax=400/);
-  await expect(page.locator("article")).toHaveCount(2);
+  await expect(page.getByText("nəticə").first()).toBeVisible();
   expect((await cardNames(page)).sort()).toEqual(["TEST Bağça 1", "TEST Bağça 2"]);
 
   await page.goto("/?district=xazar");
-  await expect(page.locator("article")).toHaveCount(1);
+  await expect(page.locator("article").first()).toBeVisible();
   expect(await cardNames(page)).toEqual(["TEST Bağça 5"]);
 
   await page.goto("/?age=10&type=training_center");
@@ -52,13 +52,14 @@ test("near me: distance order and radius", async ({ page }) => {
 
   await page.getByLabel("Radius").selectOption("3");
   await page.waitForURL(/r=3/);
-  await expect(page.locator("article")).toHaveCount(2);
+  await expect(page.locator("article h3", { hasText: "TEST Bağça 2" })).toHaveCount(0);
   expect(await cardNames(page)).toEqual(["TEST Bağça 1", "TEST Bağça 6"]);
   await expect(page.locator("article").first()).toContainText("40 m məsafədə");
 
   await page.getByLabel("Radius").selectOption("1");
   await page.waitForURL(/r=1/);
-  await expect(page.locator("article")).toHaveCount(1);
+  await expect(page.locator("article h3", { hasText: "TEST Bağça 6" })).toHaveCount(0);
+  expect(await cardNames(page)).toEqual(["TEST Bağça 1"]);
 });
 
 test("list and map stay in sync", async ({ page }, info) => {
@@ -70,12 +71,11 @@ test("list and map stay in sync", async ({ page }, info) => {
   } else {
     await expect(page.locator(".kt-pin").first()).toBeVisible();
     await page.locator("article").nth(1).hover();
-    const second = (await cardNames(page))[1];
+    const second = (await page.locator("article h3 a").allTextContents())[1];
     await expect(page.locator(".leaflet-marker-icon:has(.kt-pin--selected)")).toHaveAttribute("title", second);
-    const marker = page.locator(".leaflet-marker-icon").nth(3);
-    const title = await marker.getAttribute("title");
-    await marker.click();
-    await expect(page.locator("article.ring-2 h3")).toHaveText(title!);
+    // A pin that sits apart from the others, so nothing covers it.
+    await page.locator('.leaflet-marker-icon[title="TEST Bağça 4"]').click();
+    await expect(page.locator("article.ring-2 h3")).toHaveText("TEST Bağça 4");
   }
 });
 

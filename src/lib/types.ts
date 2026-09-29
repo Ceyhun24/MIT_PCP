@@ -59,6 +59,7 @@ export type CenterDetail = {
   rating_count: number;
   source_url: string | null;
   collected_at: string | null;
+  provider_id: string | null;
   district: { slug: string; name: string } | null;
   courses: Course[];
   center_amenities: { amenities: { slug: string; sort_order: number } | null }[];

@@ -33,8 +33,9 @@ export default async function Home({ searchParams }: PageProps<"/">) {
             origin={origin}
             header={
               <p className="text-sm text-slate-600" aria-live="polite">
-                {t("results.count", { count: search.data.total })}
-                {origin && ` · ${t("results.sortedByDistance")}`}
+                {origin
+                  ? `${t("results.count", { count: search.data.total })} · ${t("results.sortedByDistance")}`
+                  : t("results.count", { count: search.data.total })}
               </p>
             }
             footer={

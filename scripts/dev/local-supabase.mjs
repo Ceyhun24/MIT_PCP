@@ -7,6 +7,7 @@ import { createHmac } from "node:crypto";
 import http from "node:http";
 import { readFileSync } from "node:fs";
 import { startMailCatcher } from "./mail-catcher.mjs";
+import { handleStorage } from "./fake-storage.mjs";
 
 const SECRET = "local-dev-only-secret-not-used-anywhere-else-000";
 const PORT = Number(process.env.LOCAL_SUPABASE_PORT ?? 54321);
@@ -41,7 +42,7 @@ run(process.env.POSTGREST_BIN, [], {
   PGRST_LOG_LEVEL: "warn",
 });
 
-const routes = { "/rest/v1": PGRST_PORT };
+const routes = { "/rest/v1": PGRST_PORT, "/storage/v1": null };
 if (process.env.GOTRUE_BIN) {
   startMailCatcher({ smtpPort: 2500, httpPort: 2501 });
   run(process.env.GOTRUE_BIN, ["serve"], {
@@ -110,6 +111,11 @@ http
         "access-control-allow-headers": req.headers["access-control-request-headers"] ?? "*",
         "access-control-max-age": "3600",
       }).end();
+      return;
+    }
+    if (prefix === "/storage/v1") {
+      req.url = req.url.slice(prefix.length);
+      handleStorage(req, res, `http://127.0.0.1:${PGRST_PORT}`).catch((e) => res.writeHead(500).end(String(e)));
       return;
     }
     const port = routes[prefix];

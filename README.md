@@ -3,7 +3,7 @@
 A directory of kindergartens (bağçalar) and training centers (tədris mərkəzləri) in Baku.
 Stack: Next.js + Tailwind, Supabase (Postgres + PostGIS, Auth, Storage), Leaflet + OpenStreetMap.
 
-> Status: **Phase 3** (sign-in by e-mail link, reviews, review moderation). A full plain-language
+> Status: **Phase 4** (provider panel and site-admin panel). A full plain-language
 > guide to running and deploying comes in Phase 5.
 
 ## Quick start (developer)
@@ -37,7 +37,14 @@ npm run dev                  # http://localhost:3000
 | `/` | Home: "Bağçalar / Tədris mərkəzləri" switch, search, filters, "Yaxınlığımda" (near me, 1/3/5/10 km), results as list + map |
 | `/merkez/<slug>` | One listing: contacts, hours, ages, prices, languages, amenities, courses, photos, map pin, data source, reviews |
 | `/giris` | Sign in with an e-mail link (no password) |
-| `/admin/reyler` | Site admins: approve or reject reviews |
+| `/panel` | "Mərkəzlərim": a provider's centers and claims |
+| `/panel/iddia/<slug>` | Ask to manage a listing (claim) |
+| `/panel/merkez/<id>` | Edit a center: details, map pin, prices, amenities, courses, photos, replies to reviews (owner or admin) |
+| `/admin` | Site admin: overview |
+| `/admin/iddialar` | Approve or reject claims |
+| `/admin/reyler` | Approve or reject reviews |
+| `/admin/merkezler` | All listings: search, add, edit, hide/show |
+| `/admin/idxal` | Import reviewed CSV files (check first, then import) |
 
 Search filters are kept in the address bar, so a search can be bookmarked or shared.
 
@@ -49,6 +56,12 @@ Search filters are kept in the address bar, so a search can be bookmarked or sha
 
 Reviews: signed-in people write one review (1–5 ★ + text) per center; it is shown only after an admin
 approves it at `/admin/reyler`. Editing a review sends it back for approval.
+
+## How providers get access
+
+1. A provider signs in, opens their center's page and presses **«İdarəetmə üçün müraciət et»**.
+2. You (admin) see it in **Admin → Müraciətlər**; call the center's official number if in doubt, then **Təsdiqlə**.
+3. The provider now sees the center under **Mərkəzlərim** and can edit it. The database only lets them change their own centers; they can reply to reviews but never edit or delete them.
 
 ## Docs
 

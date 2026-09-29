@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { SiteFooter, SiteHeader } from "@/components/SiteHeader";
+import { AdminShell } from "@/components/AdminShell";
 import { getCurrentUser } from "@/lib/auth";
 import { formatDate } from "@/lib/format";
 import { t } from "@/lib/i18n";
@@ -25,13 +24,12 @@ type Row = {
 
 export default async function ModerationPage({ searchParams }: PageProps<"/admin/reyler">) {
   const user = await getCurrentUser();
-  if (!user) redirect(`/giris?next=${encodeURIComponent("/admin/reyler")}`);
 
   const params = await searchParams;
   const status: Status = STATUSES.includes(params.status as Status) ? (params.status as Status) : "pending";
 
   let rows: Row[] = [];
-  if (user.role === "admin") {
+  if (user?.role === "admin") {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("reviews")
@@ -44,13 +42,7 @@ export default async function ModerationPage({ searchParams }: PageProps<"/admin
   }
 
   return (
-    <>
-      <SiteHeader />
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-4 px-4 py-6">
-        <h1 className="text-2xl font-bold">{t("admin.moderation")}</h1>
-        {user.role !== "admin" ? (
-          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">{t("admin.forbidden")}</p>
-        ) : (
+    <AdminShell path="/admin/reyler" title={t("admin.moderation")}>
           <>
             <nav className="grid grid-cols-3 gap-1 rounded-xl bg-slate-100 p-1 sm:self-start">
               {STATUSES.map((s) => (
@@ -107,9 +99,6 @@ export default async function ModerationPage({ searchParams }: PageProps<"/admin
               </ul>
             )}
           </>
-        )}
-      </main>
-      <SiteFooter />
-    </>
+    </AdminShell>
   );
 }

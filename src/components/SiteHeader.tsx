@@ -12,9 +12,14 @@ export async function SiteHeader() {
           {t("app.name")}
         </Link>
         <nav className="ml-auto flex items-center gap-3 text-sm">
+          {user && (
+            <Link href="/panel" className="font-medium text-slate-700 hover:text-emerald-700">
+              {t("nav.panel")}
+            </Link>
+          )}
           {user?.role === "admin" && (
-            <Link href="/admin/reyler" className="font-medium text-slate-700 hover:text-emerald-700">
-              {t("admin.moderation")}
+            <Link href="/admin" className="font-medium text-slate-700 hover:text-emerald-700">
+              {t("nav.admin")}
             </Link>
           )}
           {user ? (

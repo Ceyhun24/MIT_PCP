@@ -16,7 +16,10 @@ export async function expectNoHorizontalScroll(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 }
 
-export const cardNames = (page: Page) => page.locator("article h3 a").allTextContents();
+/** Names of the result cards that belong to the 12 original fixtures ("TEST Bağça 1" …),
+ * so listings added by other tests (imports, new centers) don't affect the checks. */
+export const cardNames = async (page: Page) =>
+  (await page.locator("article h3 a").allTextContents()).filter((n) => /^TEST (Bağça|Kurs Mərkəzi) \d+$/.test(n));
 
 type Mail = { to: string[]; body: string; receivedAt: string };
 
@@ -61,6 +64,29 @@ export async function expectNoEnglish(page: Page) {
       ["aria-label", "placeholder", "title", "alt"].map((a) => e.getAttribute(a) ?? ""),
     )].join("\n"),
   );
+  // Native file inputs render browser-language text ("Choose File"); they must be hidden behind our own label.
+  const visibleFileInputs = await page.locator("input[type=file]:not(.sr-only)").count();
+  expect(visibleFileInputs, `visible native file input on ${page.url()}`).toBe(0);
   const allowed = texts.replace(/Leaflet|OpenStreetMap|ODbL|Instagram|Facebook|KursTap\.az|TEST|\S+@example\.test|example\.test\S*/g, "");
   expect(allowed.match(ENGLISH)?.[0] ?? null, `English text on ${page.url()}`).toBeNull();
+}
+
+/** Test-only: reads rows through the local service key (bypasses RLS) to check results. */
+export async function adminRest<T>(path: string): Promise<T> {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
+  if (!res.ok) throw new Error(`${path}: ${res.status} ${await res.text()}`);
+  return (await res.json()) as T;
+}
+
+/** Test-only: inserts a row through the local service key. */
+export async function adminInsert<T>(table: string, row: Record<string, unknown>): Promise<T> {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: "POST",
+    headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", Prefer: "return=representation" },
+    body: JSON.stringify(row),
+  });
+  if (!res.ok) throw new Error(`${table}: ${res.status} ${await res.text()}`);
+  return ((await res.json()) as T[])[0];
 }

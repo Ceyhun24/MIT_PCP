@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { t } from "@/lib/i18n";
 import type { SearchResult } from "@/lib/types";
 import { CenterCard } from "@/components/CenterCard";
@@ -47,7 +47,8 @@ export function ResultsView({ results, origin, header, footer }: Props) {
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <section className={`${tab === "list" ? "flex" : "hidden"} flex-col gap-3 lg:flex`} aria-label={t("results.list")}>
-          {header}
+          {/* Keyed wrappers: header/footer are built on the server (page.tsx). */}
+          <Fragment key="header">{header}</Fragment>
           {results.map((r) => (
             <CenterCard
               key={r.id}
@@ -57,7 +58,7 @@ export function ResultsView({ results, origin, header, footer }: Props) {
               onShowOnMap={() => selectFromList(r.id, true)}
             />
           ))}
-          {footer}
+          <Fragment key="footer">{footer}</Fragment>
         </section>
 
         <section

@@ -39,7 +39,7 @@ export async function getCenter(slug: string): Promise<Loaded<CenterDetail | nul
     .select(
       `id, type, slug, name, description, address, location, phone, email, website, social_links, working_hours,
        age_min_years, age_max_years, price_min_azn, price_max_azn, languages, group_size_max,
-       verification_status, rating_avg, rating_count, source_url, collected_at,
+       verification_status, rating_avg, rating_count, source_url, collected_at, provider_id,
        district:districts(slug, name),
        courses(id, name, subject, level, age_min_years, age_max_years, duration, price_azn, price_period),
        center_amenities(amenities(slug, sort_order)),

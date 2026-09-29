@@ -213,6 +213,16 @@ function CenterDetails({ center }: { center: CenterDetail }) {
         </section>
       )}
 
+      {!center.provider_id && (
+        <section className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <h2 className="font-semibold">{t("claim.cta")}</h2>
+          <p className="mt-1 text-sm text-slate-600">{t("claim.ctaText")}</p>
+          <Link href={`/panel/iddia/${center.slug}`} className="mt-3 inline-block rounded-lg border border-emerald-600 px-3 py-1.5 text-sm font-medium text-emerald-700 hover:bg-emerald-50">
+            {t("claim.ctaButton")}
+          </Link>
+        </section>
+      )}
+
       <Reviews centerId={center.id} slug={center.slug} ratingAvg={center.rating_avg} ratingCount={center.rating_count} />
 
       {center.source_url && (
