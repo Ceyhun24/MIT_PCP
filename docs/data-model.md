@@ -40,5 +40,5 @@ age, language, amenities), and "near me" (distance order, optional radius in km)
 
 ## Tests
 
-`npm run db:test` runs the migrations on a local Postgres + PostGIS and checks 33 rules
+`npm run db:test` runs the migrations on a local Postgres + PostGIS and checks 34 rules
 (see `supabase/tests/01_rls_test.sql`).

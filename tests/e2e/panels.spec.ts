@@ -36,6 +36,8 @@ test("provider claims a center, admin approves, provider edits only own center",
   await expect(provider.getByText("Müraciətiniz qəbul edildi")).toBeVisible();
   await provider.goto("/panel");
   await expect(provider.getByText("Yoxlanılır")).toBeVisible();
+  await expectNoEnglish(provider);
+  await expectNoHorizontalScroll(provider);
   // Not approved yet → cannot edit.
   await provider.goto(`/panel/merkez/${center.id}`);
   await expect(provider.getByText("Bu mərkəzi redaktə etmək icazəniz yoxdur.")).toBeVisible();
@@ -139,9 +141,11 @@ test("admin hides/shows, creates a center, and imports CSV", async ({ page }, in
   const email = `admin2-${run}@example.test`;
   await signIn(page, email);
   await makeAdmin(email);
-  await page.goto("/admin");
-  await expectNoEnglish(page);
-  await expectNoHorizontalScroll(page);
+  for (const url of ["/admin", "/admin/iddialar", "/admin/reyler", "/admin/merkezler", "/admin/idxal", "/panel"]) {
+    await page.goto(url);
+    await expectNoEnglish(page);
+    await expectNoHorizontalScroll(page);
+  }
 
   // Hide → gone from public search → show again
   await page.goto("/admin/merkezler?q=TEST Bağça 5");
