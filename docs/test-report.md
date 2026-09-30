@@ -39,8 +39,8 @@ data existed yet (see *Gaps*).
 ## Gaps and open items
 
 1. **No real data yet.** This environment's network blocks `overpass-api.de`, so the 10 + 10 sample could not be collected. The collector was tested end-to-end against a local fake server. → Allow the host, or run `npm run seed:collect` on your computer.
-2. **No real Supabase project yet.** Everything was tested on a faithful local stand-in, not on Supabase itself. After setup, repeat the three core checks by hand (search, review + approval, provider edit).
-3. **Photo limits** are checked in the browser only; set the bucket limits in Supabase (README, Part 2, step 3).
+2. **Real Supabase project set up (30 Sep 2026).** The three migrations and the photo limits were applied; `npm run check:supabase` passes all 7 checks, and the site loads against it (districts from the database, search returns 0 results because no listings are imported yet). Still to do by hand after sign-in is configured: review + approval and provider edit on the real project.
+3. **Photo limits**: set on the real bucket (5 MB, JPG/PNG/WEBP).
 4. **E-mail sending**: Supabase's built-in e-mail is rate-limited; connect an SMTP service before launch.
 5. **Not built (outside the spec)**: spam protection / rate limits on reviews and claims beyond sign-in, e-mail notifications to admins, content-security headers, analytics.
 6. **Map tiles**: the free OpenStreetMap tile server suits modest traffic only.
